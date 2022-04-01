@@ -1,14 +1,12 @@
 package mysqlmemo
 
 import (
+	"github.com/okikechinonso/internals/domain/entities"
 	"log"
-
-	"github.com/okikechinonso/wallet/internals/domain/entities"
 )
 
-func (d *MySqlDb) Migrate() {
-
-	err := d.MyDB.AutoMigrate(&entities.Wallet{})
+func (d *sqLRepository) Migrate() {
+	err := d.db.AutoMigrate(&entities.Wallet{})
 	if err != nil {
 		log.Printf("%s", err)
 	}
