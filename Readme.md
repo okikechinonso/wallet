@@ -57,12 +57,7 @@ Endpoint
 ```
 localhost:<PORT>/api/v1/{:wallet_address}/balance
 ```
-payload
-```
-{
-"amount": <enter amount(intergers or decimals)> 
-}
-```
+
 
 ## Tests
 Testing is done using the GoMock framework. The ``gomock`` package and the ``mockgen``code generation tool are used for this purpose.
