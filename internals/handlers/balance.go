@@ -2,24 +2,17 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/okikechinonso/internals/ports"
-	redismemo "github.com/okikechinonso/internals/repository/redis_memo"
 	"github.com/okikechinonso/internals/service"
-	"github.com/okikechinonso/pkg/database"
 )
 
 type Handler struct {
-	Wallet ports.WalletService
-	Redis  ports.RedisRepository
+	Wallet *service.WalletService
 }
 
-func NewHandler() ports.IHandler {
+func NewHandler() *Handler {
 	wallet := service.NewWalletService()
-	redis := database.NewRedisDB().ConnectRedisDB()
-	redisrepo := redismemo.NewRedisRepository(redis)
 	return &Handler{
 		Wallet: wallet,
-		Redis:  redisrepo,
 	}
 }
 

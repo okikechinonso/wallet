@@ -2,14 +2,14 @@ package service
 
 import (
 	"errors"
+	"log"
+	"net/http"
+
 	"github.com/okikechinonso/internals/domain/entities"
 	"github.com/okikechinonso/internals/ports"
 	mysqlmemo "github.com/okikechinonso/internals/repository/mysql_memo"
 	redismemo "github.com/okikechinonso/internals/repository/redis_memo"
 	"github.com/okikechinonso/pkg/database"
-	"log"
-	"net/http"
-	"os"
 )
 
 type WalletService struct {
@@ -17,14 +17,11 @@ type WalletService struct {
 	Redis ports.RedisRepository
 }
 
-func NewWalletService() ports.WalletService {
-	db := database.NewDatabase().ConnectDB(os.Getenv("DATABASE_URL"))
-	err := database.NewDatabase().MigrateAll(db)
-	if err != nil {
-		panic("unable to migrate")
-	}
+func NewWalletService() *WalletService {
+	db := database.ConnectDB()
+
 	repo := mysqlmemo.NewWalletRepository(db)
-	redis := database.NewRedisDB().ConnectRedisDB()
+	redis := database.ConnectRedisDB()
 	redisrepo := redismemo.NewRedisRepository(redis)
 	return &WalletService{
 		Repo:  repo,

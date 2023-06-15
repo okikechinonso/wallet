@@ -16,7 +16,7 @@ import (
 )
 
 type Server struct {
-	Hdl   ports.IHandler
+	Hdl   *handler.Handler
 	Redis ports.RedisRepository
 }
 
@@ -87,7 +87,7 @@ func NewServer() *Server {
 		}
 	}
 	hdl := handler.NewHandler()
-	redis := database.NewRedisDB().ConnectRedisDB()
+	redis := database.ConnectRedisDB()
 	redisrepo := redismemo.NewRedisRepository(redis)
 	return &Server{
 		Hdl:   hdl,

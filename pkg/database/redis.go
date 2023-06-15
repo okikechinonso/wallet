@@ -1,15 +1,14 @@
 package database
 
 import (
-	"github.com/go-redis/redis/v8"
-	"github.com/okikechinonso/internals/ports"
 	"os"
+
+	"github.com/go-redis/redis/v8"
 )
 
-func NewRedisDB() ports.IRedis {
-	return &datastore{}
-}
-func (d *datastore) ConnectRedisDB() *redis.Client {
+var RedisClient = ConnectRedisDB()
+
+func ConnectRedisDB() *redis.Client {
 	url := os.Getenv("REDIS_URL")
 	if url == "" {
 		url = "localhost:6379"
@@ -17,6 +16,6 @@ func (d *datastore) ConnectRedisDB() *redis.Client {
 	var redisClient = redis.NewClient(&redis.Options{
 		Addr: url,
 	})
-	d.redis = redisClient
+
 	return redisClient
 }

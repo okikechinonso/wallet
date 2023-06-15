@@ -4,9 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"strconv"
+
 	"github.com/go-redis/redis/v8"
 	"github.com/okikechinonso/internals/ports"
-	"strconv"
+	"github.com/okikechinonso/pkg/database"
 )
 
 type redisRepository struct {
@@ -15,7 +17,7 @@ type redisRepository struct {
 
 func NewRedisRepository(client *redis.Client) ports.RedisRepository {
 	return &redisRepository{
-		Redis: client,
+		Redis: database.RedisClient,
 	}
 }
 

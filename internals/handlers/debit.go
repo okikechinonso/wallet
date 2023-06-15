@@ -24,7 +24,7 @@ func (h *Handler) Debit() gin.HandlerFunc {
 			return
 		}
 		val := fmt.Sprintf("%v", balance)
-		h.Redis.Pub(&val)
+		h.Wallet.Redis.Pub(&val)
 		ctx.JSON(code, gin.H{"balance": balance})
 	}
 }
